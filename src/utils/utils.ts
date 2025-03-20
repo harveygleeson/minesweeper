@@ -61,18 +61,18 @@ export const recursivelyClearAllNeighbours = (
   col: number,
   board: Array<Array<CellDetails>>
 ) => {
-  const newBoard = board.map((row) => row.map((cell) => ({ ...cell })));
+  // const newBoard = board.map((row) => row.map((cell) => ({ ...cell })));
 
-  newBoard[row][col].state = "DESTROYED";
+  board[row][col].state = "DESTROYED";
   const neighbourCellPositions = determineNeighbourCells(
     row,
     col,
-    newBoard.length,
-    newBoard[0].length
+    board.length,
+    board[0].length
   );
 
   neighbourCellPositions.forEach((position) => {
-    const cell = newBoard[position.row][position.column];
+    const cell = board[position.row][position.column];
     const neighbourState = cell.state;
 
     if (cell.bombNeighbourCount > 0) {
@@ -86,11 +86,10 @@ export const recursivelyClearAllNeighbours = (
       !cell.isBomb
     ) {
       cell.state = "DESTROYED";
-      recursivelyClearAllNeighbours(position.row, position.column, newBoard);
+      recursivelyClearAllNeighbours(position.row, position.column, board);
       return;
     }
   });
-  return newBoard;
 };
 
 const determineNeighbourCells = (

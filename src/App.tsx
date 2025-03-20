@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./App.css";
-import { Board } from "./components/Board/Board";
 import {
   recursivelyClearAllNeighbours,
   getInitialBoardDetails,
 } from "./utils/utils";
+import Board from "./components/Board/Board";
 
 const initial: Array<Array<number>> = [];
 const rowCount = 18;
@@ -33,7 +33,8 @@ function App() {
           updatedBoard[row][col].state = "DESTROYED";
           const { bombNeighbourCount } = updatedBoard[row][col];
           if (bombNeighbourCount === 0) {
-            return recursivelyClearAllNeighbours(row, col, updatedBoard);
+            recursivelyClearAllNeighbours(row, col, updatedBoard);
+            return updatedBoard;
           } else {
             updatedBoard[row][col].state = "DESTROYED";
             return updatedBoard;
